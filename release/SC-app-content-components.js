@@ -33,14 +33,14 @@ angular.module('SC-app-content-components')
 angular.module('SC-app-content-components')
   /**
    * @ngdoc directive
-   * @name wowApp.directive:eventList
+   * @name SC-app-content-components.directive:scEventList
    * @directive
    *
    * @description
    * Renders event list component using it's relevant template
    *
    */
-  .directive('eventList', ["$http", "$compile", function($http, $compile) {
+  .directive('scEventList', ["$http", "$compile", function($http, $compile) {
     return {
       restrict: 'A',
       scope: true,
@@ -60,14 +60,14 @@ angular.module('SC-app-content-components')
   }])
   /**
    * @ngdoc directive
-   * @name wowApp.directive:personList
+   * @name SC-app-content-components.directive:scPersonList
    * @directive
    *
    * @description
    * Renders person list component using it's relevant template
    *
    */
-  .directive('personList', ["$http", "$compile", function($http, $compile) {
+  .directive('scPersonList', ["$http", "$compile", function($http, $compile) {
     return {
       restrict: 'A',
       scope: true,
@@ -87,14 +87,14 @@ angular.module('SC-app-content-components')
   }])
   /**
    * @ngdoc directive
-   * @name wowApp.directive:pageList
+   * @name SC-app-content-components.directive:scPageList
    * @directive
    *
    * @description
    * Renders content page list component using it's relevant template
    *
    */
-  .directive('pageList', ["$http", "$compile", function($http, $compile) {
+  .directive('scPageList', ["$http", "$compile", function($http, $compile) {
     return {
       restrict: 'A',
       scope: true,
@@ -114,14 +114,14 @@ angular.module('SC-app-content-components')
   }])
   /**
    * @ngdoc directive
-   * @name wowApp.directive:youtubePromo
+   * @name SC-app-content-components.directive:scYoutubePromo
    * @directive
    *
    * @description
    * Renders youtube embed component using youtube promo view template
    *
    */
-  .directive('youtubePromo', ["$http", "$compile", "$window", function($http, $compile, $window) {
+  .directive('scYoutubePromo', ["$http", "$compile", "$window", function($http, $compile, $window) {
     return {
       restrict: 'A',
       scope: true,
@@ -205,14 +205,14 @@ angular.module('SC-app-content-components')
   }])
   /**
    * @ngdoc directive
-   * @name wowApp.directive:linkList
+   * @name SC-app-content-components.directive:scLinkList
    * @directive
    *
    * @description
    * Renders link list component using link list view template
    *
    */
-  .directive('linkList', ["$http", "$compile", function($http, $compile) {
+  .directive('scLinkList', ["$http", "$compile", function($http, $compile) {
     return {
       restrict: 'A',
       scope: true,
@@ -232,14 +232,14 @@ angular.module('SC-app-content-components')
   }])
   /**
    * @ngdoc directive
-   * @name wowApp.directive:htmlBlock
+   * @name SC-app-content-components.directive:scHtmlBlock
    * @directive
    *
    * @description
    * Renders HTML block component using HTML block view template
    *
    */
-  .directive('htmlBlock', ["$http", "$compile", function($http, $compile) {
+  .directive('scHtmlBlock', ["$http", "$compile", function($http, $compile) {
     return {
       restrict: 'A',
       scope: true,
@@ -259,14 +259,14 @@ angular.module('SC-app-content-components')
   }])
   /**
    * @ngdoc directive
-   * @name wowApp.directive:twitterFeed
+   * @name SC-app-content-components.directive:scTwitterFeed
    * @directive
    *
    * @description
    * Renders twitter feed component using it's relevant template
    *
    */
-  .directive('twitterFeed', ["$http", "$compile", function($http, $compile) {
+  .directive('scTwitterFeed', ["$http", "$compile", function($http, $compile) {
     return {
       restrict: 'A',
       scope: true,
@@ -275,6 +275,222 @@ angular.module('SC-app-content-components')
         return function(scope, element) {
 
           var tpl = 'bower_components/SC-app-content-components/release/twitterFeedView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scHeading
+   * @directive
+   *
+   * @description
+   * Renders heading component using it's relevant template
+   *
+   */
+  .directive('scHeading', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/headingView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scLongText
+   * @directive
+   *
+   * @description
+   * Renders long text component using it's relevant template
+   *
+   */
+  .directive('scLongText', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/longTextView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scSoundcloud
+   * @directive
+   *
+   * @description
+   * Renders soundcloud component using it's relevant template
+   *
+   */
+  .directive('scSoundcloud', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/soundcloudView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scYoutube
+   * @directive
+   *
+   * @description
+   * Renders youtube component using it's relevant template
+   *
+   */
+  .directive('scYoutube', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/youtubeView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scFlickr
+   * @directive
+   *
+   * @description
+   * Renders flickr component using it's relevant template
+   *
+   */
+  .directive('scFlickr', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/flickrView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scPullQuote
+   * @directive
+   *
+   * @description
+   * Renders pull quote component using it's relevant template
+   *
+   */
+  .directive('scPullQuote', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/pullQuoteView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scLink
+   * @directive
+   *
+   * @description
+   * Renders link component using it's relevant template
+   *
+   */
+  .directive('scLink', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/linkView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scImage
+   * @directive
+   *
+   * @description
+   * Renders link component using it's relevant template
+   *
+   */
+  .directive('scImage', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/imageView.html';
           $http.get(tpl)
             .then(function(response) {
               element.html($compile(response.data)(scope));
