@@ -1,16 +1,16 @@
 <div ng-show="component" class="container featured-events-container">
 
-  <h2>{{ component.field_list_performance.title }} <a ui-sref="wow.eventList">(See all)</a></h2>
+  <h2>{{ component.field_list_performance.title }} <a ui-sref="app.eventList">(See all)</a></h2>
 
   <article class="featured-event" 
       data-ng-repeat="event in component.field_list_performance.field_performance_list | betterLimitTo:3">
 
-      <a ui-sref="wow.eventSingle({ eventId: event.alias_json })" class="featured-thumbnail">
+      <a ui-sref="app.eventSingle({ eventId: event.alias_json })" class="featured-thumbnail">
         <img ng-src="{{ event.field_production.field_image.file.url }}" alt="{{ event.field_production.field_image.alt }}">
         <span class="featured">Featured</span>
       </a>
       <div class="featured-content">
-        <h3><a ui-sref="wow.eventSingle({ eventId: event.alias_json })">{{ event.title }}</a></h3>
+        <h3><a ui-sref="app.eventSingle({ eventId: event.alias_json })">{{ event.title }}</a></h3>
 
         <div class="event-list-date" ng-show="event.field_start_time">
           {{ event.field_start_time | amDateFormat:'dddd Do MMMM' }},
@@ -19,7 +19,7 @@
 
         <div class="event-list-type">{{ event.field_production.field_event_type.name }}</div>
 
-        <a ui-sref="wow.eventSingle({ eventId: event.alias_json })" class="read-more-link">Read more</a>
+        <a ui-sref="app.eventSingle({ eventId: event.alias_json })" class="read-more-link">Read more</a>
 
       </div>
 

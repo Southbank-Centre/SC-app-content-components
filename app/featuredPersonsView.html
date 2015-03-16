@@ -1,18 +1,18 @@
 <div ng-show="component" class="container featured-persons-container">
 
-  <h2>{{ component.field_list_person.title }} <a ng-show="personCount" ui-sref="wow.personList">(see all {{ personCount }} speakers)</a></h2>
+  <h2>{{ component.field_list_person.title }} <a ng-show="personCount" ui-sref="app.personList">(see all {{ personCount }} speakers)</a></h2>
 
   <article class="featured-person" 
       data-ng-repeat="person in component.field_list_person.field_person_list | betterLimitTo:2">
 
-      <a ui-sref="wow.person({ personId: person.alias_json })" class="featured-thumbnail">
+      <a ui-sref="app.personSingle({ personAlias: person.alias_json })" class="featured-thumbnail">
         <img ng-src="{{ person.field_photo.field_image_file.field_image.file.url }}" alt="{{ person.field_photo.field_image_file.field_image.alt }}" title="{{ person.field_photo.field_image_file.field_image.title }}">
       </a>
       <div class="featured-content">
-        <h3><a ui-sref="wow.person({ personId: person.alias_json })">{{ person.field_first_name }} {{ person.field_last_name }}</a></h3>
+        <h3><a ui-sref="app.personSingle({ personAlias: person.alias_json })">{{ person.field_first_name }} {{ person.field_last_name }}</a></h3>
         <div class="person-credentials" ng-show="person.field_credentials">{{ person.field_credentials }}</div>
 
-        <a ui-sref="wow.person({ personId: person.alias_json })" class="read-more-link">Read more</a>
+        <a ui-sref="app.personSingle({ personAlias: person.alias_json })" class="read-more-link">Read more</a>
 
       </div>
 

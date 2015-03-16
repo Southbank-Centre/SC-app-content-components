@@ -7,12 +7,12 @@
 
       <div class="featured-content">
 
-        <h3><a ui-sref="wow.page({ pageId: page.field_content_page.alias_json })">{{ page.field_content_page.title }}</a></h3>
+        <h3><a ui-sref="app.pageSingle({ pageAlias: page.field_content_page.alias_json })">{{ page.field_content_page.title }}</a></h3>
         <p ng-show="page.field_subtitle" class="subtitle">{{ page.field_subtitle }}</p>
-        <a ui-sref="wow.page({ pageId: page.field_content_page.alias_json })" class="read-more-link">Read more</a>
+        <a ui-sref="app.pageSingle({ pageAlias: page.field_content_page.alias_json })" class="read-more-link">Read more</a>
       </div>
 
-      <a ui-sref="wow.page({ pageId: page.field_content_page.alias_json })" ng-show="page.field_content_page.field_image_file.field_image" class="featured-thumbnail">
+      <a ui-sref="app.pageSingle({ pageAlias: page.field_content_page.alias_json })" ng-show="page.field_content_page.field_image_file.field_image" class="featured-thumbnail">
         <img ng-src="{{ page.field_content_page.field_image_file.field_image.file.url }}" alt="{{ page.field_content_page.field_image_file.field_image.alt }}" title="{{ page.field_content_page.field_image_file.field_image.title }}">
       </a>
 
