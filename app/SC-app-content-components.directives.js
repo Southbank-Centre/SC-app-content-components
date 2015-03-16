@@ -107,7 +107,8 @@ angular.module('SC-app-content-components')
               // Use same protocol for youtube embed as page
               var iframe = angular.element(scope.component.field_youtube_embed_code.value);
               var url = iframe.attr('src');
-              url = url + '&enablejsapi=1';
+              url = (url.indexOf('&') > -1 ? url + '&' : url + '?');
+              url = url + 'enablejsapi=1';
               url = url.replace(/http:/g, '');
               url = url.replace(/https:/g, '');
               iframe.attr('src', url);
@@ -118,14 +119,14 @@ angular.module('SC-app-content-components')
 
 
               // If not mobile device
-              if(typeof window.orientation === 'undefined') {
+              if(typeof $window.orientation === 'undefined') {
                 
                 var waitForYouTubeIframeAPI = function() {
 
                   setTimeout(function() {
 
                     // If the YouTube Iframe API is ready, wait again
-                    if (!window.youTubeIframeAPIReady) {
+                    if (!$window.youTubeIframeAPIReady) {
 
                       waitForYouTubeIframeAPI();
 
