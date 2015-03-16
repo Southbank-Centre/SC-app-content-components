@@ -8,4 +8,4 @@
  * Provides the app with the ability to display content components content and features
  */
 angular
-  .module('SC-app-content-components');
+  .module('SC-app-content-components', []);
