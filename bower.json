@@ -2,7 +2,8 @@
   "name": "SC-app-content-components",
   "version": "0.0.0",
   "dependencies": {
-  	"angular": "~1.2.0"
+  	"angular": "~1.2.0",
+    "SC-app-utils": "samueljmurray/SC-app-utils#0.0.0"
   },
   "appPath": "app",
   "main": "./release/SC-app-content-components.min.js",

@@ -1,0 +1,8 @@
+<div class="youtube-promo-container" ng-show="component">
+
+  <div data-ng-bind-html="component.field_youtube_embed_code.value | unsafe" class="youtube-player"></div>
+  <img src="/assets/imgs/play.png" alt="" class="play" id="play-button" ng-click="playVideo()">
+
+  <div class="caption" data-ng-bind-html="component.field_caption.value"></div>
+
+</div>

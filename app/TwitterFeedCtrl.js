@@ -1,36 +1,6 @@
 'use strict';
 
 /**
- * @ngdoc overview
- * @name SC-app-content-components
- * @description
- *
- * Provides the app with the ability to display content components content and features
- */
-angular
-  .module('SC-app-content-components');;'use strict';
-
-/**
- * @ngdoc controller
- * @name SC-app-content-components.controller:HeadingCtrl
- * @controller
- *
- * @description
- * Defines the state and behaviour of the $scope for the HeadingView state
- */
-
-angular.module('SC-app-content-components')
-  .controller('HeadingCtrl', ["$scope", function($scope) {
-
-    if ($scope.paragraph.bundle === 'subheading') {
-
-      $scope.paragraph.field_subheading  = ('<h' + $scope.paragraph.field_subheading_level + '>' + $scope.paragraph.field_subheading + '</h' + $scope.paragraph.field_subheading_level + '>');
-
-    }
-
-  }]);;'use strict';
-
-/**
  * @ngdoc controller
  * @name SC-app-content-components.controller:TwitterFeedCtrl
  * @controller
@@ -40,7 +10,7 @@ angular.module('SC-app-content-components')
  */
 
 angular.module('SC-app-content-components')
-  .controller('TwitterFeedCtrl', ["$scope", "$rootScope", "$http", "$window", function($scope, $rootScope, $http, $window) {
+  .controller('TwitterFeedCtrl', function($scope, $rootScope, $http, $window) {
 
     // Load the tweets from the API
     $http.get('/json/favourited-tweets/' + $rootScope.festivalId)
@@ -101,4 +71,4 @@ angular.module('SC-app-content-components')
 
       });
 
-  }]);
+  });

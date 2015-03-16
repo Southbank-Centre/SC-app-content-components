@@ -1,0 +1,40 @@
+<div class="twitter-feed container" ng-controller="TwitterFeedCtrl" ng-show="festival && twitterValid">
+
+	<h2 class="get-involved-twitter">Get involved on Twitter</h2>
+
+	<h2 class="twitter-links" ng-show="festival.field_twitter_hashtag">
+		<img src="assets/imgs/twitter_logo_darkgrey.png" alt="Twitter Logo" class="twitter-logo" />
+		<a href="https://twitter.com/{{ festival.field_twitter_username}}">@{{ festival.field_twitter_username }}</a>
+		<a href="https://twitter.com/hashtag/{{ festival.field_twitter_hashtag }}">#{{ festival.field_twitter_hashtag }}</a>
+	</h2>
+
+	<div class="tweet-container" ng-repeat="tweet in tweets" ng-show="tweets">
+
+		<div class="tweet">
+			<div class="tweet-inner" ng-class="{'has-media': tweet.entities.media[0]}">
+				<div class="tweet-topline">
+					<div class="tweet-user">
+						<span class="tweet-user-image">
+							<a href="https://twitter.com/{{ tweet.user.screen_name }}"><img src="{{ tweet.user.profile_image_url }}" alt="{{ tweet.user.screen_name }} profile image"></a>
+						</span>
+						<span class="tweet-info">
+							<div class="tweet-user-name">
+								<span>{{ tweet.user.name }} <a href="https://twitter.com/{{ tweet.user.screen_name }}" class="tweet-user-screen-name">@{{ tweet.user.screen_name }}</a></span>
+							</div>
+							<div class="tweet-time">{{ tweet.created_at }}</div>
+						</span>
+					</div>
+					<div class="tweet-intents">
+						<a href="https://twitter.com/intent/retweet?tweet_id={{ tweet.id_str }}" target="_blank" class="twitter-retweet"></a>
+						<a href="https://twitter.com/intent/tweet?in_reply_to={{ tweet.id_str }}" target="_blank" class="twitter-reply"></a>
+						<a href="https://twitter.com/intent/favorite?tweet_id={{ tweet.id_str }}" target="_blank" class="twitter-favourite"></a>
+					</div>
+				</div>
+				<p ng-bind-html="tweet.text" class="tweet-text" ng-class="{'has-media': tweet.entities.media[0]}"></p>
+			</div>
+			<div ng-show="tweet.entities.media[0]" class="tweet-media"><a href="{{ tweet.entities.media[0].media_url }}" target="_blank"><img src="{{ tweet.entities.media[0].media_url }}" /></a></div>
+		</div>
+
+    </div>  
+
+</div>
