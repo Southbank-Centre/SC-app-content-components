@@ -10,65 +10,75 @@
  */
 
 angular.module('SC-app-content-components')
-  .controller('TwitterFeedCtrl', function($scope, $rootScope, $http, $window) {
+  .controller('TwitterFeedCtrl', function($scope, $http, $window, appConfig) {
 
-    // Load the tweets from the API
-    $http.get('/json/favourited-tweets/' + $rootScope.festivalId)
-      .success(function(data) {
+    // This block is tied to festivals because it uses the twitter
+    // username stored on festival
+    if (appConfig.festivalId) {
 
-      	if (!data.errors) {
+      // Load the tweets from the API
+      $http.get('/json/favourited-tweets/' + appConfig.festivalId)
+        .success(function(data) {
 
-      		$scope.twitterValid = true;
-      	
-	      	$scope.tweets = data;
+          if (!data.errors) {
 
-	      	angular.forEach($scope.tweets, function(tweet, i) {
+            $scope.twitterValid = true;
+          
+            $scope.tweets = data;
 
-	      		// Format creation date/time with moment twitter format
-	      		$scope.tweets[i].created_at = $window.moment(tweet.created_at).fromNow();
+            angular.forEach($scope.tweets, function(tweet, i) {
 
-	      		// Begin formatting of entities
-	      		var entities = {};
+              // Format creation date/time with moment twitter format
+              $scope.tweets[i].created_at = $window.moment(tweet.created_at).fromNow();
 
-	      		// Hashtags
-	      		angular.forEach(tweet.entities.hashtags, function(hashtag) {
-	      			entities[hashtag.indices[0]] = '<a href="https://twitter.com/hashtag/' + hashtag.text + '">';
-	      			entities[hashtag.indices[1]] = '</a>';
-	      		});
+              // Begin formatting of entities
+              var entities = {};
 
-	      		// Media
-	      		angular.forEach(tweet.entities.media, function(media) {
-	      			entities[media.indices[0]] = '<a href="' + media.media_url + '">';
-	      			entities[media.indices[1]] = '</a>';
-	      		});
+              // Hashtags
+              angular.forEach(tweet.entities.hashtags, function(hashtag) {
+                entities[hashtag.indices[0]] = '<a href="https://twitter.com/hashtag/' + hashtag.text + '">';
+                entities[hashtag.indices[1]] = '</a>';
+              });
 
-	      		// URLs
-	      		angular.forEach(tweet.entities.urls, function(url) {
-	      			entities[url.indices[0]] = '<a href="' + url.url + '">';
-	      			entities[url.indices[1]] = '</a>';
-	      		});
+              // Media
+              angular.forEach(tweet.entities.media, function(media) {
+                entities[media.indices[0]] = '<a href="' + media.media_url + '">';
+                entities[media.indices[1]] = '</a>';
+              });
 
-	      		// User mentions
-	      		angular.forEach(tweet.entities.user_mentions, function(user_mention) {
-	      			entities[user_mention.indices[0]] = '<a href="http://twitter.com/' + user_mention.screen_name + '">';
-	      			entities[user_mention.indices[1]] = '</a>';
-	      		});
+              // URLs
+              angular.forEach(tweet.entities.urls, function(url) {
+                entities[url.indices[0]] = '<a href="' + url.url + '">';
+                entities[url.indices[1]] = '</a>';
+              });
 
-	      		// Apply entity markup
-	      		var delta = 0;
-	      		angular.forEach(entities, function(entity, pos) {
+              // User mentions
+              angular.forEach(tweet.entities.user_mentions, function(user_mention) {
+                entities[user_mention.indices[0]] = '<a href="http://twitter.com/' + user_mention.screen_name + '">';
+                entities[user_mention.indices[1]] = '</a>';
+              });
 
-	      			var n = parseInt(pos, 10) + delta;
-	      			$scope.tweets[i].text = $scope.tweets[i].text.substr(0, n) + entity + $scope.tweets[i].text.substr(n);
-	      			delta = delta + entity.length;
+              // Apply entity markup
+              var delta = 0;
+              angular.forEach(entities, function(entity, pos) {
 
-	      		});
+                var n = parseInt(pos, 10) + delta;
+                $scope.tweets[i].text = $scope.tweets[i].text.substr(0, n) + entity + $scope.tweets[i].text.substr(n);
+                delta = delta + entity.length;
 
-	      	});
+              });
 
-		}
+            });
+
+          }
 
 
-      });
+        });
+
+    } else {
+
+      console.error('Twitter feed component requires festival module');
+
+    }
 
   });
