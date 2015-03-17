@@ -137,7 +137,7 @@ angular.module('SC-app-content-components')
               // Use same protocol for youtube embed as page
               var iframe = angular.element(scope.component.field_youtube_embed_code.value);
               var url = iframe.attr('src');
-              url = (url.indexOf('&') > -1 ? url + '&' : url + '?');
+              url = (url.indexOf('?') > -1 ? url + '&' : url + '?');
               url = url + 'enablejsapi=1';
               url = url.replace(/http:/g, '');
               url = url.replace(/https:/g, '');
