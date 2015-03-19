@@ -1,0 +1,524 @@
+// Components styling
+
+
+.component-featured {
+
+  min-height: 50px;
+  @include clearfix;
+  margin-top: $section-margin-top;
+  h2 {
+    margin: 0 $margin $margin*0.75 $margin;
+  }
+
+}
+
+
+.component-featured-events {
+
+  article {
+    @include breakpoint($bp-mobile) {
+      @include span(4);
+      &:last-child { 
+        @include last;
+        float: left;
+      }
+      clear: none;
+    }
+    h3 {
+      margin-bottom: $margin;
+      a { color: $dark-grey; background: none; }
+    }
+  }
+
+  .featured-events-container {
+
+    display:inline-block;
+
+    .featured-thumbnail {
+      position: relative;
+      display: block; 
+      .featured { position: absolute; bottom: 0; margin: 0; background: $secondary-highlight; color: $white; padding: $padding/2 $padding; font-weight:bold; }
+      img { width: 100%; display: block; }
+    }
+
+    .featured-content {
+      background: $white; padding: $padding;
+    }
+
+  }
+
+}
+
+
+.component-featured-persons {
+
+  article {
+    @include breakpoint($bp-mobile) {
+      @include span(6);
+      &:last-child { 
+        @include last;
+        float: left;
+      }
+      clear: none;
+    }
+    h3 {
+      margin-bottom: $margin;
+      a { color: $dark-grey; background: none; }
+    }
+  }
+
+  .featured-persons-container {
+
+    .featured-thumbnail {
+      position: relative;
+      display: block; 
+      .featured { position: absolute; bottom: 0; margin: 0; background: $secondary-highlight; color: $white; padding: $padding/2 $padding; }
+      img { width: 100%; display: block; }
+    }
+
+    .featured-content {
+      background: $white; 
+      padding: $padding;
+      word-wrap:break-word;
+    }
+
+  }
+
+}
+
+
+.component-featured-pages {
+
+  article {
+    @include breakpoint($bp-mobile) {
+      @include span(3);
+      &:last-child { 
+        @include last;
+        float: left;
+      }
+      clear: none;
+    }
+    h3 {
+      a { color: $dark-grey; background: none; }
+      margin-bottom:0;
+    }
+  }
+
+  .featured-pages-container {
+
+    .featured-thumbnail {
+      position: relative;
+      display: block; 
+      .featured { position: absolute; bottom: 0; margin: 0; background: $secondary-highlight; color: $white; padding: $padding/2 $padding; }
+      img { width: 100%; display: block; }
+    }
+
+    .featured-content {
+      background: $white; padding: $padding;
+
+      .subtitle {
+        margin-top:0;
+      }
+    }
+
+  }
+
+}
+
+// Content paragraphs
+
+.sub-heading { 
+  background: none;
+  padding: $padding;
+  margin: 0 0 2px;
+  @include breakpoint($bp-small-desktop) {
+    @include span(10);
+    @include post(2);
+  }
+  h2,h3,h4 { 
+    margin: 0; 
+  }
+}
+
+.text-container { 
+  background: $white;
+  padding: $padding;
+  margin: 0 0 $margin*4;
+  @include breakpoint($bp-small-desktop) {
+    @include span(10);
+    @include post(2);
+  }
+  p {
+    &:first-of-type { margin-top: 0; }
+    &:last-of-type { margin-bottom: 0; }
+  }
+}
+
+.pullquote-container {
+  background: $white;
+  padding: $padding;
+  margin: 0 0 2px;
+  @include breakpoint($bp-small-desktop) {
+    @include span(10);
+    @include post(2);
+  }
+}
+
+.youtube-container {
+  margin: 0 0 $margin*2;
+  @include breakpoint($bp-small-desktop) {
+    @include span(8);
+    @include post(4);
+  }
+  .youtube-player {
+    // responsive embeds - see http://www.smashingmagazine.com/2014/02/27/making-embedded-content-work-in-responsive-design/
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; // 9/16
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .caption { background: $white; padding: $padding; }
+}
+
+.component-youtube-promo {
+  background: $dark-grey;
+}
+.youtube-promo-container {
+
+  @include span(12);
+  position: relative;
+  @include breakpoint($bp-small-desktop) {
+    @include span(8);
+  }
+
+  .youtube-player {
+    // responsive embeds - see http://www.smashingmagazine.com/2014/02/27/making-embedded-content-work-in-responsive-design/
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; // 9/16
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .play {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin-top: -80px;
+    margin-left: -50px; 
+    width: 100px; 
+    height: auto;
+    cursor: pointer;
+  }
+
+  .caption { background: $dark-grey; padding: $padding; color: $light-grey;}
+}
+
+.soundcloud-container {
+  margin: 0 0 $margin*2;
+  @include breakpoint($bp-small-desktop) {
+    @include span(8);
+    @include post(4);
+  }
+  .soundcloud-player {
+    position: relative;
+    width: 100%;
+    height: 166px;
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .caption { background: $white; padding: $padding; }
+}
+
+.flickr-container {
+  margin: 0 0 $margin*2;
+  @include breakpoint($bp-small-desktop) {
+    @include span(8);
+    @include post(4);
+  }
+  .flickr-player {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 66.6667%; // 2/3
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .caption { background: $white; padding: $padding; }
+}
+
+.link-container {
+  background: $white;
+  padding: $padding;
+  margin: 0 0 $margin*4;
+  @include breakpoint($bp-small-desktop) {
+    @include span(10);
+    @include post(2);
+  }
+  ul { list-style: none; margin-left: 0; }
+}
+
+.link-list-container {
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 1em;
+}
+
+.html-block-container {
+  *:first-child {
+    margin-top:0;
+  }
+}
+
+/**
+ * Generic list/media object styles.
+ */
+
+.list-item {
+  @extend .container;
+
+  .list-item__title {
+
+    display: block;
+    margin-bottom: 0.5em;
+    background: none;
+    color: $dark-grey;
+
+    &:hover {
+      color: $link-color;
+    }
+  }
+
+  .list-item__image {
+    @include span(3);
+    margin-right: 0;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .list-item__content {
+
+    @include span(9);
+    @include last;
+
+    @include breakpoint($bp-desktop) {
+      @include span(7);
+      // Undo @include last;
+      float: left;
+    }
+
+
+    padding: gutter(1);
+
+    background-color: rgba(255, 255, 255, 1);
+
+    border-left: 2px solid #ecedea;
+    border-bottom: 2px solid #ecedea;
+  }
+
+  .list-item__teaser {
+    @include breakpoint($bp-desktop) {
+      @include span(10);
+    }
+  }
+
+  .list-item__read-more {
+    clear: both;
+  }
+}
+
+.twitter-feed {
+
+  a[href^="http://"],
+  a[href^="https://"] {
+    background:none;
+    padding:0;
+  }
+
+  .get-involved-twitter {
+    margin-bottom:0;
+  }
+
+  .twitter-links {
+
+    .twitter-logo {
+      width: 30px;
+      height: 25px;
+      vertical-align:middle;
+    }
+
+    a {
+      margin:0 $margin/4;
+    }
+
+  }
+
+  .tweet-container {
+
+    padding:$padding;
+    margin-bottom:1px;
+    background-color:white;
+    display:inline-block;
+    width:100%;
+
+    .tweet {
+
+      display:inline-block;
+      width:100%;
+
+      .tweet-topline {
+
+        @include breakpoint($bp-desktop) {
+          @include span(6);
+          @include post(6);
+        }
+
+        .tweet-user {
+
+          display:inline-block;
+          @include breakpoint($bp-desktop) {
+            @include span(8);
+          }
+
+          .tweet-user-image {
+
+            float:left;
+            display:inline-block;
+
+          }
+
+          .tweet-info {
+
+            float:left;
+            display:inline-block;
+            padding-left:$padding;
+            line-height: 1.2;
+
+            .tweet-user-name {
+
+              font-weight:bold;            
+
+              .tweet-user-screen-name {
+
+                font-weight:normal;
+
+              }
+
+            }
+
+            .tweet-time {
+
+              color:$mid-grey;
+
+            }
+
+          }
+
+        }
+
+      }
+
+      .tweet-intents {
+
+        @include span(4 last);
+
+        a {
+          float:right;
+          margin:0 3px;
+          height:16px;
+          width:16px;
+          display:inline-block;
+
+          &.twitter-favourite {
+            background: transparent url('/assets/imgs/twitter_favourite.png') no-repeat center center;
+
+            &:hover {
+              background: transparent url('/assets/imgs/twitter_favourite_hover.png') no-repeat center center;
+            }
+
+          }
+
+          &.twitter-reply {
+            background: transparent url('/assets/imgs/twitter_reply.png') no-repeat center center;
+
+            &:hover {
+              background: transparent url('/assets/imgs/twitter_reply_hover.png') no-repeat center center;
+            }
+
+          }
+
+          &.twitter-retweet {
+            background: transparent url('/assets/imgs/twitter_retweet.png') no-repeat center center;
+
+            &:hover {
+              background: transparent url('/assets/imgs/twitter_retweet_hover.png') no-repeat center center;
+            }
+
+          }
+
+        }
+
+      }
+
+      .tweet-text {
+
+        @include breakpoint($bp-desktop) {
+          @include span(6);
+          @include post(6);
+
+          &.has-media {
+            @include span(4);
+          }
+        }
+
+      }
+
+    }
+
+    .tweet-media {
+
+      display:none;
+      text-align:right;
+      padding-left:$padding;
+      margin-top:-$margin;
+      @include span(2);
+
+      @include breakpoint($bp-desktop) {
+        display:block;
+      }
+
+      img {
+        max-width:100%;
+        max-height:160px;
+      }
+
+    }
+
+  }
+
+}
