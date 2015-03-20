@@ -6,7 +6,7 @@
       data-ng-repeat="person in component.field_list_person.field_person_list | betterLimitTo:2">
 
       <a ui-sref="app.personSingle({ personAlias: person.alias_json })" class="featured-thumbnail">
-        <img ng-src="{{ person.field_photo.field_image_file.field_image.file.url }}" alt="{{ person.field_photo.field_image_file.field_image.alt }}" title="{{ person.field_photo.field_image_file.field_image.title }}">
+        <img ng-src="{{ person.field_image.file.url }}" alt="{{ person.field_image.alt }}" title="{{ person.field_image.title }}">
       </a>
       <div class="featured-content">
         <h3><a ui-sref="app.personSingle({ personAlias: person.alias_json })">{{ person.field_first_name }} {{ person.field_last_name }}</a></h3>
