@@ -30,7 +30,7 @@
 						<a href="https://twitter.com/intent/favorite?tweet_id={{ tweet.id_str }}" target="_blank" class="twitter-favourite"></a>
 					</div>
 				</div>
-				<p ng-bind-html="tweet.text" class="tweet-text" ng-class="{'has-media': tweet.entities.media[0]}"></p>
+				<p ng-bind-html="tweet.text" class="tweet-text large-paragraph" ng-class="{'has-media': tweet.entities.media[0]}"></p>
 			</div>
 			<div ng-show="tweet.entities.media[0]" class="tweet-media"><a href="{{ tweet.entities.media[0].media_url }}" target="_blank"><img src="{{ tweet.entities.media[0].media_url }}" /></a></div>
 		</div>
