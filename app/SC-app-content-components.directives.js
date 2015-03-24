@@ -95,6 +95,17 @@ angular.module('SC-app-content-components')
     return {
       restrict: 'A',
       scope: true,
+      link: function() {
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        $window.onYouTubeIframeAPIReady = function() {
+          window.youTubeIframeAPIReady = true;
+        };
+
+      },
       compile: function() {
 
         return function(scope, element) {
