@@ -95,20 +95,22 @@ angular.module('SC-app-content-components')
     return {
       restrict: 'A',
       scope: true,
-      link: function() {
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        $window.onYouTubeIframeAPIReady = function() {
-          window.youTubeIframeAPIReady = true;
-        };
-
-      },
       compile: function() {
 
         return function(scope, element) {
+
+          // YouTube iFrame API
+          // If not mobile device
+          if(typeof $window.orientation === 'undefined') {
+            var tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            $window.onYouTubeIframeAPIReady = function() {
+              window.youTubeIframeAPIReady = true;
+            };
+          }
 
           var tpl = 'bower_components/SC-app-content-components/release/youtubePromoView.html';
           $http.get(tpl)
