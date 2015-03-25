@@ -87,7 +87,8 @@
 }
 
 
-.component-featured-pages {
+.component-featured-pages,
+.component-featured-blog-posts {
 
   article {
     @include breakpoint($bp-mobile) {
@@ -125,6 +126,17 @@
 
 }
 
+// Overrides specific to the featured blog posts
+.component-featured-blog-posts {
+  p {
+    margin: 0;
+  }
+  p.blog-teaser {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+  }
+}
+
 // Content paragraphs
 
 .sub-heading { 
@@ -135,7 +147,8 @@
     @include span(10);
     @include post(2);
   }
-  h2,h3,h4 { 
+  h2,h3,h4 {
+    font-family: 'SC AkkuratLight';
     margin: 0; 
   }
 }
@@ -245,6 +258,25 @@
       width: 100%;
     }
   }
+  .caption { background: $white; padding: $padding; }
+}
+
+.storify-container {
+  margin: 0 0 $margin*2;
+  @include breakpoint($bp-small-desktop) {
+    @include span(10);
+    @include post(2);
+  }
+
+  .storify-player {
+    background-color: #FFFFFF;
+  }
+
+  iframe {
+    max-height: 600px;
+    padding-left: 20px;
+  }
+
   .caption { background: $white; padding: $padding; }
 }
 
