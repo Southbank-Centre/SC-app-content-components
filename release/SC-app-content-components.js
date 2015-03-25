@@ -114,6 +114,52 @@ angular.module('SC-app-content-components')
   }])
   /**
    * @ngdoc directive
+   * @name SC-app-content-components.directive:scBlogPostList
+   * @directive
+   *
+   * @description
+   * Renders content blog post list component using the relevant template
+   *
+   */
+  .directive('scBlogPostList', ["$http", "$compile", "utilitiesFactory", function($http, $compile, utilitiesFactory) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/featuredBlogPostView.html';
+          $http.get(tpl)
+            .then(function(response) {
+
+              // Cache the posts which have been publised to overwrite the main posts array - remove unpublished posts
+              var publishedPosts = [];
+
+              angular.forEach(scope.component.field_list_blog_post.field_blog_post_list, function(post) {
+                // Set the published dates to use seconds rather than milliseconds so that the date formatting works correctly
+                if (post.field_published_date) {
+                  post.field_published_date = utilitiesFactory.timestampSecondsToMS(post.field_published_date);
+                }
+
+                // If the post is not published the status will be 0, 1 otherwise
+                if(parseInt(post.status, 10) > 0) {
+                  publishedPosts.push(post);
+                }
+              });
+
+              // Assign only the published blog posts back into the scope data for rendering
+              scope.component.field_list_blog_post.field_blog_post_list = publishedPosts;
+
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
    * @name SC-app-content-components.directive:scYoutubePromo
    * @directive
    *
@@ -504,6 +550,33 @@ angular.module('SC-app-content-components')
         return function(scope, element) {
 
           var tpl = 'bower_components/SC-app-content-components/release/imageView.html';
+          $http.get(tpl)
+            .then(function(response) {
+              element.html($compile(response.data)(scope));
+            });
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scStorify
+   * @directive
+   *
+   * @description
+   * Renders storify component using it's relevant template
+   *
+   */
+  .directive('scStorify', ["$http", "$compile", function($http, $compile) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          var tpl = 'bower_components/SC-app-content-components/release/storifyView.html';
           $http.get(tpl)
             .then(function(response) {
               element.html($compile(response.data)(scope));

@@ -1,0 +1,23 @@
+<div ng-show="component" class="container featured-pages-container">
+
+  <h2>{{ component.field_list_blog_post.title }}</h2>
+
+  <article class="featured-blog-post"
+      data-ng-repeat="blogPost in component.field_list_blog_post.field_blog_post_list | betterLimitTo:4">
+
+      <div class="featured-content">
+
+        <h3><a ui-sref="wow.blogSingle({ blogId: blogPost.alias_json })">{{ blogPost.title }}</a></h3>
+        <p ng-show="blogPost.field_published_date" class="published-date">{{ blogPost.field_published_date | amDateFormat:'dddd D MMMM YYYY' }}</p>
+        <p ng-show="blogPost.field_author_name" class="author-name">{{ blogPost.field_author_name }}</p>
+        <p ng-show="blogPost.field_teaser" class="blog-teaser">{{ blogPost.field_teaser }}</p>
+        <a ui-sref="wow.blogSingle({ blogId: blogPost.alias_json })" class="read-more-link">Read more</a>
+      </div>
+
+      <a ui-sref="wow.blogSingle({ blogId: blogPost.alias_json })" ng-show="blogPost.field_image" class="featured-thumbnail">
+        <img ng-src="{{ blogPost.field_image.file.url }}" alt="{{ blogPost.field_image.alt }}" title="{{ blogPost.field_image.title }}">
+      </a>
+
+  </article>
+
+</div>

@@ -95,9 +95,9 @@ angular.module('SC-app-content-components')
     return {
       restrict: 'A',
       scope: true,
-      compile: function(element, attrs) {
+      compile: function() {
 
-        return function(scope, element, attrs) {
+        return function(scope, element) {
 
           var tpl = 'bower_components/SC-app-content-components/release/featuredBlogPostView.html';
           $http.get(tpl)
