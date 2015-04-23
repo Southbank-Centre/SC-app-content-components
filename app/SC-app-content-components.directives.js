@@ -18,7 +18,7 @@ angular.module('SC-app-content-components')
 
         return function(scope, element) {
 
-          contentComponentFactory.getContentComponent(scope.id, function(contentComponent) {
+          contentComponentFactory.getContentComponent(scope.component.id, function(contentComponent) {
 
             scope.contentComponent = contentComponent;
 
