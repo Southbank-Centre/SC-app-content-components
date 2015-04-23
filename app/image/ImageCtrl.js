@@ -10,12 +10,8 @@
  */
 
 angular.module('SC-app-content-components')
-  .controller('ImageCtrl', function($scope, contentComponentFactory, utilitiesFactory) {
+  .controller('ImageCtrl', function($scope) {
 
-    contentComponentFactory.getContentComponent($scope.id, function(contentComponent) {
-
-      $scope.image = contentComponent;
-
-    }, utilitiesFactory.genericHTTPCallbackError);
+    $scope.image = $scope.contentComponent;
 
   });

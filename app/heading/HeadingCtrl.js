@@ -10,12 +10,8 @@
  */
 
 angular.module('SC-app-content-components')
-  .controller('HeadingCtrl', function($scope, contentComponentFactory, utilitiesFactory) {
+  .controller('HeadingCtrl', function($scope) {
 
-    contentComponentFactory.getContentComponent($scope.id, function(contentComponent) {
-
-      $scope.heading = ('<h' + contentComponent.field_heading_level + '>' + contentComponent.field_heading + '</h' + contentComponent.field_heading_level + '>');
-
-    }, utilitiesFactory.genericHTTPCallbackError);
+    $scope.heading = ('<h' + $scope.contentComponent.field_heading_level + '>' + $scope.contentComponent.field_heading + '</h' + $scope.contentComponent.field_heading_level + '>');
 
   });

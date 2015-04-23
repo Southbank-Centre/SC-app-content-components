@@ -29,7 +29,9 @@ angular.module('SC-app-content-components')
         getContentComponent: function(itemId, callbackSuccess, callbackError) {
 
           $http.get('/json/paragraphs_item.json?item_id=' + itemId)
-            .success(callbackSuccess)
+            .success(function(response) {
+              callbackSuccess(response.list[0]);
+            })
             .error(callbackError);
         }
 

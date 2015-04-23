@@ -15,14 +15,14 @@ angular
 angular.module('SC-app-content-components')
   /**
    * @ngdoc directive
-   * @name SC-app-content-components.directive:scHeading
+   * @name SC-app-content-components.directive:scContentComponent
    * @directive
    *
    * @description
-   * Renders heading component using heading view template
+   * Decides which content component to render
    *
    */
-  .directive('scHeading', ["$http", "$compile", function($http, $compile) {
+  .directive('scContentComponent', ["$http", "$compile", "contentComponentFactory", "utilitiesFactory", function($http, $compile, contentComponentFactory, utilitiesFactory) {
     return {
       restrict: 'A',
       scope: true,
@@ -30,119 +30,17 @@ angular.module('SC-app-content-components')
 
         return function(scope, element) {
 
-          var tpl = 'bower_components/SC-app-content-components/release/heading/headingView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
+          contentComponentFactory.getContentComponent(scope.id, function(contentComponent) {
 
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scHtmlBlock
-   * @directive
-   *
-   * @description
-   * Renders HTML block component using HTML block view template
-   *
-   */
-  .directive('scHtmlBlock', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
+            scope.contentComponent = contentComponent;
 
-        return function(scope, element) {
+            var tpl = 'bower_components/SC-app-content-components/release/' + contentComponent.bundle + '/' + contentComponent.bundle + 'View.html';
+            $http.get(tpl)
+              .then(function(response) {
+                element.html($compile(response.data)(scope));
+              });
 
-          var tpl = 'bower_components/SC-app-content-components/release/htmlBlock/htmlBlockView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scImage
-   * @directive
-   *
-   * @description
-   * Renders image component using image view template
-   *
-   */
-  .directive('scImage', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/image/imageView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scLongText
-   * @directive
-   *
-   * @description
-   * Renders long text component using long text view template
-   *
-   */
-  .directive('scLongText', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/longText/longTextView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scPageElementSpec
-   * @directive
-   *
-   * @description
-   * Renders page element spec component using page element spec view template
-   *
-   */
-  .directive('scPageElementSpec', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/pageElementSpec/pageElementSpecView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
+          }, utilitiesFactory.genericHTTPCallbackError);
 
         };
       }
@@ -178,7 +76,9 @@ angular.module('SC-app-content-components')
         getContentComponent: function(itemId, callbackSuccess, callbackError) {
 
           $http.get('/json/paragraphs_item.json?item_id=' + itemId)
-            .success(callbackSuccess)
+            .success(function(response) {
+              callbackSuccess(response.list[0]);
+            })
             .error(callbackError);
         }
 
@@ -196,13 +96,9 @@ angular.module('SC-app-content-components')
  */
 
 angular.module('SC-app-content-components')
-  .controller('HeadingCtrl', ["$scope", "contentComponentFactory", "utilitiesFactory", function($scope, contentComponentFactory, utilitiesFactory) {
+  .controller('HeadingCtrl', ["$scope", function($scope) {
 
-    contentComponentFactory.getContentComponent($scope.id, function(contentComponent) {
-
-      $scope.heading = ('<h' + contentComponent.field_heading_level + '>' + contentComponent.field_heading + '</h' + contentComponent.field_heading_level + '>');
-
-    }, utilitiesFactory.genericHTTPCallbackError);
+    $scope.heading = ('<h' + $scope.contentComponent.field_heading_level + '>' + $scope.contentComponent.field_heading + '</h' + $scope.contentComponent.field_heading_level + '>');
 
   }]);;'use strict';
 
@@ -216,13 +112,9 @@ angular.module('SC-app-content-components')
  */
 
 angular.module('SC-app-content-components')
-  .controller('HtmlBlockCtrl', ["$scope", "contentComponentFactory", "utilitiesFactory", function($scope, contentComponentFactory, utilitiesFactory) {
+  .controller('HtmlBlockCtrl', ["$scope", function($scope) {
 
-    contentComponentFactory.getContentComponent($scope.id, function(contentComponent) {
-
-      $scope.htmlBlock = contentComponent;
-
-    }, utilitiesFactory.genericHTTPCallbackError);
+      $scope.htmlBlock = $scope.contentComponent;
 
   }]);;'use strict';
 
@@ -236,13 +128,9 @@ angular.module('SC-app-content-components')
  */
 
 angular.module('SC-app-content-components')
-  .controller('ImageCtrl', ["$scope", "contentComponentFactory", "utilitiesFactory", function($scope, contentComponentFactory, utilitiesFactory) {
+  .controller('ImageCtrl', ["$scope", function($scope) {
 
-    contentComponentFactory.getContentComponent($scope.id, function(contentComponent) {
-
-      $scope.image = contentComponent;
-
-    }, utilitiesFactory.genericHTTPCallbackError);
+    $scope.image = $scope.contentComponent;
 
   }]);;'use strict';
 
@@ -256,13 +144,9 @@ angular.module('SC-app-content-components')
  */
 
 angular.module('SC-app-content-components')
-  .controller('LongTextCtrl', ["$scope", "contentComponentFactory", "utilitiesFactory", function($scope, contentComponentFactory, utilitiesFactory) {
+  .controller('LongTextCtrl', ["$scope", function($scope) {
 
-    contentComponentFactory.getContentComponent($scope.id, function(contentComponent) {
-
-      $scope.longText = contentComponent;
-
-    }, utilitiesFactory.genericHTTPCallbackError);
+    $scope.longText = $scope.contentComponent;
 
   }]);;'use strict';
 
@@ -276,12 +160,8 @@ angular.module('SC-app-content-components')
  */
 
 angular.module('SC-app-content-components')
-  .controller('PageElementSpecCtrl', ["$scope", "contentComponentFactory", "utilitiesFactory", function($scope, contentComponentFactory, utilitiesFactory) {
+  .controller('PageElementSpecCtrl', ["$scope", function($scope) {
 
-    contentComponentFactory.getContentComponent($scope.id, function(contentComponent) {
-
-      $scope.pageElementSpec = contentComponent;
-
-    }, utilitiesFactory.genericHTTPCallbackError);
+      $scope.pageElementSpec = $scope.contentComponent;
 
   }]);
