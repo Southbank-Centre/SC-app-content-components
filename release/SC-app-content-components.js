@@ -102,17 +102,17 @@ angular.module('SC-app-content-components')
 
 /**
  * @ngdoc controller
- * @name SC-app-content-components.controller:HtmlBlockCtrl
+ * @name SC-app-content-components.controller:HtmlCtrl
  * @controller
  *
  * @description
- * Defines the state and behaviour of the $scope for the htmlBlockView state
+ * Defines the state and behaviour of the $scope for the htmlView state
  */
 
 angular.module('SC-app-content-components')
-  .controller('HtmlBlockCtrl', ["$scope", function($scope) {
+  .controller('HtmlCtrl', ["$scope", function($scope) {
 
-      $scope.htmlBlock = $scope.contentComponent;
+      $scope.html = $scope.contentComponent;
 
   }]);;'use strict';
 
