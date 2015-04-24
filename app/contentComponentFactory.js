@@ -28,10 +28,8 @@ angular.module('SC-app-content-components')
          */
         getContentComponent: function(itemId, callbackSuccess, callbackError) {
 
-          $http.get('/json/paragraphs_item.json?item_id=' + itemId)
-            .success(function(response) {
-              callbackSuccess(response.list[0]);
-            })
+          $http.get('/json/paragraphs_item/' + itemId + '.json')
+            .success(callbackSuccess)
             .error(callbackError);
         }
 
