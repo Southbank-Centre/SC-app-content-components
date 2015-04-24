@@ -75,10 +75,8 @@ angular.module('SC-app-content-components')
          */
         getContentComponent: function(itemId, callbackSuccess, callbackError) {
 
-          $http.get('/json/paragraphs_item.json?item_id=' + itemId)
-            .success(function(response) {
-              callbackSuccess(response.list[0]);
-            })
+          $http.get('/json/paragraphs_item/' + itemId + '.json')
+            .success(callbackSuccess)
             .error(callbackError);
         }
 
@@ -128,7 +126,15 @@ angular.module('SC-app-content-components')
  */
 
 angular.module('SC-app-content-components')
-  .controller('ImageCtrl', ["$scope", function($scope) {
+  .controller('ImageCtrl', ["$scope", "$http", function($scope, $http) {
+
+    // if we have a file id in the image field, get the URL of the file
+    if ($scope.contentComponent.field_image.file.id) {
+      $http.get('/json/file/' + $scope.contentComponent.field_image.file.id + '.json')
+        .success(function(file) {
+          $scope.contentComponent.field_image.file.url = file.url;
+        });
+    }
 
     $scope.image = $scope.contentComponent;
 
