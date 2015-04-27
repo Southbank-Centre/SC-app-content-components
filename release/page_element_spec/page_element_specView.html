@@ -5,7 +5,14 @@
     <div class="page-element-spec-example-html" data-ng-bind-html="pageElementSpec.field_html.value"></div>
   </div>
 
-  <div>{{ pageElementSpec.field_html.value }}</div>
+  <dl class="page-element-spec-html-title">
+    <dt>HTML</dt>
+    <dd>
+      <pre>
+        <code>{{ pageElementSpec.field_html.value }}</code>
+      </pre>
+    </dd>
+  </dl>
 
   <dl class="page-element-spec-css-properties container" ng-repeat="cssProperty in pageElementSpec.field_css_properties">
     <dt>{{ cssProperty.first }}</dt>
