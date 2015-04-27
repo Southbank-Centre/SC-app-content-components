@@ -1,18 +1,18 @@
 <div ng-show="pageElementSpec" class="component-page-element-spec" ng-controller="PageElementSpecCtrl">
 
-  <div class="page-element-spec-example">
+  <div class="page-element-spec-example container">
     <div class="page-element-spec-example-title">Example</div>
     <div class="page-element-spec-example-html" data-ng-bind-html="pageElementSpec.field_html.value"></div>
   </div>
 
   <div>{{ pageElementSpec.field_html.value }}</div>
 
-  <dl class="page-element-spec-css-properties" ng-repeat="cssProperty in pageElementSpec.field_css_properties">
+  <dl class="page-element-spec-css-properties container" ng-repeat="cssProperty in pageElementSpec.field_css_properties">
     <dt>{{ cssProperty.first }}</dt>
     <dd>{{ cssProperty.second }}</dd>
   </dl>
 
-  <dl class="page-element-spec-description" ng-show="pageElementSpec.field_description.value">
+  <dl class="page-element-spec-description container" ng-show="pageElementSpec.field_description.value">
     <dt>Usage guidelines</dt>
     <div data-ng-bind-html="pageElementSpec.field_description.value"></div>
   </dl>
