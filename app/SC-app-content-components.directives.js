@@ -33,14 +33,4 @@ angular.module('SC-app-content-components')
         };
       }
     };
-  })
-  .directive('prism', function($window) {
-    return {
-      restrict: 'A',
-      link: function ($scope, element) {
-        element.ready(function() {
-          $window.Prism.highlightElement(element[0]);
-        });
-      }
-    };
   });

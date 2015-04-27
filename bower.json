@@ -4,7 +4,7 @@
   "dependencies": {
     "angular": "~1.2.0",
     "SC-app-utils": "Southbank-Centre/SC-app-utils#0.0.0",
-    "prism": "*"
+    "angular-highlightjs": "~0.4.1"
   },
   "appPath": "app",
   "main": "./release/SC-app-content-components.min.js",
