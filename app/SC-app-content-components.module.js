@@ -9,5 +9,6 @@
  */
 angular
   .module('SC-app-content-components', [
-    'SC-app-utils'
+    'SC-app-utils',
+    'hljs'
   ]);

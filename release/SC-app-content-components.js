@@ -9,7 +9,8 @@
  */
 angular
   .module('SC-app-content-components', [
-    'SC-app-utils'
+    'SC-app-utils',
+    'hljs'
   ]);;'use strict';
 
 angular.module('SC-app-content-components')
