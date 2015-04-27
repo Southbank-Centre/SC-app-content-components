@@ -1,11 +1,16 @@
 <div ng-show="pageElementSpec" class="component-page-element-spec" ng-controller="PageElementSpecCtrl">
 
-  <div class="page-element-spec-example container">
-    <div class="page-element-spec-example-title">Example</div>
-    <div class="page-element-spec-example-html" data-ng-bind-html="pageElementSpec.field_html.value"></div>
-  </div>
+  <dl class="page-element-spec-example container">
+    <dt class="page-element-spec-example-title">Example</dt>
+    <dd class="page-element-spec-example-html" data-ng-bind-html="pageElementSpec.field_html.value"></dd>
+  </dl>
 
-  <dl class="page-element-spec-html">
+  <dl class="page-element-spec-css-properties container" ng-repeat="cssProperty in pageElementSpec.field_css_properties">
+    <dt>{{ cssProperty.first }}</dt>
+    <dd>{{ cssProperty.second }}</dd>
+  </dl>
+
+  <dl class="page-element-spec-html container">
     <dt>HTML</dt>
     <dd>
       <pre>
@@ -14,14 +19,9 @@
     </dd>
   </dl>
 
-  <dl class="page-element-spec-css-properties container" ng-repeat="cssProperty in pageElementSpec.field_css_properties">
-    <dt>{{ cssProperty.first }}</dt>
-    <dd>{{ cssProperty.second }}</dd>
-  </dl>
-
   <dl class="page-element-spec-description container" ng-show="pageElementSpec.field_description.value">
     <dt>Usage guidelines</dt>
-    <div data-ng-bind-html="pageElementSpec.field_description.value"></div>
+    <dd data-ng-bind-html="pageElementSpec.field_description.value"></dd>
   </dl>
   
 </div>
