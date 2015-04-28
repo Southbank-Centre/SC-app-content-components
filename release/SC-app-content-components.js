@@ -68,7 +68,7 @@ angular.module('SC-app-content-components')
 
             scope.contentComponent = contentComponent;
 
-            if (contentComponent.bundle === 'heading') {
+            if (contentComponent.field_heading_level === '2') {
               var tpl = 'bower_components/SC-app-content-components/release/heading/headingMenuView.html';
               $http.get(tpl)
                 .then(function(response) {
