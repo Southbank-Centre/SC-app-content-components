@@ -8,7 +8,117 @@
  * Provides the app with the ability to display content components content and features
  */
 angular
-  .module('SC-app-content-components', []);;'use strict';
+  .module('SC-app-content-components', [
+    'SC-app-utils',
+    'hljs'
+  ]);;'use strict';
+
+angular.module('SC-app-content-components')
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components.directive:scContentComponent
+   * @directive
+   *
+   * @description
+   * Decides which content component to render
+   *
+   */
+  .directive('scContentComponent', ["$http", "$compile", "contentComponentFactory", "utilitiesFactory", function($http, $compile, contentComponentFactory, utilitiesFactory) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          contentComponentFactory.getContentComponent(scope.component.id, function(contentComponent) {
+
+            scope.contentComponent = contentComponent;
+
+            var tpl = 'bower_components/SC-app-content-components/release/' + contentComponent.bundle + '/' + contentComponent.bundle + 'View.html';
+            $http.get(tpl)
+              .then(function(response) {
+                element.html($compile(response.data)(scope));
+              });
+
+          }, utilitiesFactory.genericHTTPCallbackError);
+
+        };
+      }
+    };
+  }])
+  /**
+   * @ngdoc directive
+   * @name SC-app-content-components-heading-menu.directive:scContentComponentHeadingMenu
+   * @directive
+   *
+   * @description
+   * Display content component H2 headings as a menu
+   *
+   */
+  .directive('scContentComponentHeadingMenu', ["$http", "$compile", "contentComponentFactory", "utilitiesFactory", function($http, $compile, contentComponentFactory, utilitiesFactory) {
+    return {
+      restrict: 'A',
+      scope: true,
+      compile: function() {
+
+        return function(scope, element) {
+
+          contentComponentFactory.getContentComponent(scope.component.id, function(contentComponent) {
+
+            scope.contentComponent = contentComponent;
+
+            if (contentComponent.field_heading_level === '2') {
+              var tpl = 'bower_components/SC-app-content-components/release/heading/headingMenuView.html';
+              $http.get(tpl)
+                .then(function(response) {
+                  element.html($compile(response.data)(scope));
+                });
+            }
+
+          }, utilitiesFactory.genericHTTPCallbackError);
+
+        };
+      }
+    };
+  }]);;'use strict';
+
+/**
+ * @ngdoc service
+ * @name SC-app-content-components.factory:contentComponentFactory
+ * @factory
+ *
+ * @description
+ * Factory for loading content component data
+ */
+
+angular.module('SC-app-content-components')
+  .factory('contentComponentFactory', ["$http", function($http) {
+
+      return {
+
+        /**
+         * @ngdoc method
+         * @methodOf SC-app-content-components.factory:contentComponentFactory
+         * @name SC-app-content-components.factory:contentComponentFactory#getContentComponent
+         * @returns {undefined} Undefined
+         * @param {string} itemId The id of the paragraph item
+         * @param {function} callbackSuccess The function to call when the HTTP request succeeds
+         * @param {function} callbackError The function to call when the HTTP request fails
+         *
+         * @description
+         * For getting data for a content component by paragraphs item id
+         */
+        getContentComponent: function(itemId, callbackSuccess, callbackError) {
+
+          $http.get('/json/paragraphs_item/' + itemId + '.json')
+            .success(callbackSuccess)
+            .error(callbackError);
+        }
+
+      };
+
+    }]);;'use strict';
 
 /**
  * @ngdoc controller
@@ -16,656 +126,84 @@ angular
  * @controller
  *
  * @description
- * Defines the state and behaviour of the $scope for the HeadingView state
+ * Defines the state and behaviour of the $scope for the headingView state
  */
 
 angular.module('SC-app-content-components')
   .controller('HeadingCtrl', ["$scope", function($scope) {
 
-    if ($scope.paragraph.bundle === 'subheading') {
+    $scope.heading = ('<h' + $scope.contentComponent.field_heading_level + '>' + $scope.contentComponent.field_heading + '</h' + $scope.contentComponent.field_heading_level + '>');
 
-      $scope.paragraph.field_subheading  = ('<h' + $scope.paragraph.field_subheading_level + '>' + $scope.paragraph.field_subheading + '</h' + $scope.paragraph.field_subheading_level + '>');
-
-    }
-
-  }]);;'use strict';
-
-angular.module('SC-app-content-components')
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scEventList
-   * @directive
-   *
-   * @description
-   * Renders event list component using it's relevant template
-   *
-   */
-  .directive('scEventList', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/featuredEventsView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scPersonList
-   * @directive
-   *
-   * @description
-   * Renders person list component using it's relevant template
-   *
-   */
-  .directive('scPersonList', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/featuredPersonsView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scPageList
-   * @directive
-   *
-   * @description
-   * Renders content page list component using it's relevant template
-   *
-   */
-  .directive('scPageList', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/featuredPagesView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scBlogPostList
-   * @directive
-   *
-   * @description
-   * Renders content blog post list component using the relevant template
-   *
-   */
-  .directive('scBlogPostList', ["$http", "$compile", "utilitiesFactory", function($http, $compile, utilitiesFactory) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/featuredBlogPostView.html';
-          $http.get(tpl)
-            .then(function(response) {
-
-              // Cache the posts which have been publised to overwrite the main posts array - remove unpublished posts
-              var publishedPosts = [];
-
-              angular.forEach(scope.component.field_list_blog_post.field_blog_post_list, function(post) {
-                // Set the published dates to use seconds rather than milliseconds so that the date formatting works correctly
-                if (post.field_published_date) {
-                  post.field_published_date = utilitiesFactory.timestampSecondsToMS(post.field_published_date);
-                }
-
-                // If the post is not published the status will be 0, 1 otherwise
-                if(parseInt(post.status, 10) > 0) {
-                  publishedPosts.push(post);
-                }
-              });
-
-              // Assign only the published blog posts back into the scope data for rendering
-              scope.component.field_list_blog_post.field_blog_post_list = publishedPosts;
-
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scYoutubePromo
-   * @directive
-   *
-   * @description
-   * Renders youtube embed component using youtube promo view template
-   *
-   */
-  .directive('scYoutubePromo', ["$http", "$compile", "$window", function($http, $compile, $window) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          // YouTube iFrame API
-          // If not mobile device
-          if(typeof $window.orientation === 'undefined') {
-            var tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            $window.onYouTubeIframeAPIReady = function() {
-              window.youTubeIframeAPIReady = true;
-            };
-          }
-
-          var tpl = 'bower_components/SC-app-content-components/release/youtubePromoView.html';
-          $http.get(tpl)
-            .then(function(response) {
-                
-              // Add &enablejsapi=1 to youtube url
-              // Use same protocol for youtube embed as page
-              var iframe = angular.element(scope.component.field_youtube_embed_code.value);
-              var url = iframe.attr('src');
-              url = (url.indexOf('?') > -1 ? url + '&' : url + '?');
-              url = url + 'enablejsapi=1';
-              url = url.replace(/http:/g, '');
-              url = url.replace(/https:/g, '');
-              iframe.attr('src', url);
-              scope.component.field_youtube_embed_code.value = iframe[0].outerHTML;
-              
-
-              element.html($compile(response.data)(scope));
-
-
-              // If not mobile device
-              if(typeof $window.orientation === 'undefined') {
-                
-                var waitForYouTubeIframeAPI = function() {
-
-                  setTimeout(function() {
-
-                    // If the YouTube Iframe API is ready, wait again
-                    if (!$window.youTubeIframeAPIReady) {
-
-                      waitForYouTubeIframeAPI();
-
-                    } else {
-
-                      var player;
-
-                      player = new $window.YT.Player(element.find('iframe')[0], {
-                        events: {
-                          onReady: function() {
-                            // Attach playVideo to scope, which is used on
-                            // big play button
-                            scope.playVideo = function() {
-                              player.playVideo();
-                              element.find('#play-button').remove();
-                            };
-                          },
-                          onStateChange: function(state) {
-                            if (state.data === 1) {
-                              element.find('#play-button').remove();
-                            }
-                          }
-                        }
-                      });
-
-                    }
-                    
-                  }, 200);
-
-                };
-
-                waitForYouTubeIframeAPI();
-
-
-                } else {
-                // remove play button if mobile
-                element.find('#play-button').remove();
-              }
-               
-
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scLinkList
-   * @directive
-   *
-   * @description
-   * Renders link list component using link list view template
-   *
-   */
-  .directive('scLinkList', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/linkListView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scHtmlBlock
-   * @directive
-   *
-   * @description
-   * Renders HTML block component using HTML block view template
-   *
-   */
-  .directive('scHtmlBlock', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/htmlBlockView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scTwitterFeed
-   * @directive
-   *
-   * @description
-   * Renders twitter feed component using it's relevant template
-   *
-   */
-  .directive('scTwitterFeed', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/twitterFeedView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scHeading
-   * @directive
-   *
-   * @description
-   * Renders heading component using it's relevant template
-   *
-   */
-  .directive('scHeading', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/headingView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scLongText
-   * @directive
-   *
-   * @description
-   * Renders long text component using it's relevant template
-   *
-   */
-  .directive('scLongText', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/longTextView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scSoundcloud
-   * @directive
-   *
-   * @description
-   * Renders soundcloud component using it's relevant template
-   *
-   */
-  .directive('scSoundcloud', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/soundcloudView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scYoutube
-   * @directive
-   *
-   * @description
-   * Renders youtube component using it's relevant template
-   *
-   */
-  .directive('scYoutube', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/youtubeView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scFlickr
-   * @directive
-   *
-   * @description
-   * Renders flickr component using it's relevant template
-   *
-   */
-  .directive('scFlickr', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/flickrView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scPullQuote
-   * @directive
-   *
-   * @description
-   * Renders pull quote component using it's relevant template
-   *
-   */
-  .directive('scPullQuote', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/pullQuoteView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scLink
-   * @directive
-   *
-   * @description
-   * Renders link component using it's relevant template
-   *
-   */
-  .directive('scLink', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/linkView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scImage
-   * @directive
-   *
-   * @description
-   * Renders link component using it's relevant template
-   *
-   */
-  .directive('scImage', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/imageView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
-  }])
-  /**
-   * @ngdoc directive
-   * @name SC-app-content-components.directive:scStorify
-   * @directive
-   *
-   * @description
-   * Renders storify component using it's relevant template
-   *
-   */
-  .directive('scStorify', ["$http", "$compile", function($http, $compile) {
-    return {
-      restrict: 'A',
-      scope: true,
-      compile: function() {
-
-        return function(scope, element) {
-
-          var tpl = 'bower_components/SC-app-content-components/release/storifyView.html';
-          $http.get(tpl)
-            .then(function(response) {
-              element.html($compile(response.data)(scope));
-            });
-
-        };
-      }
-    };
   }]);;'use strict';
 
 /**
  * @ngdoc controller
- * @name SC-app-content-components.controller:TwitterFeedCtrl
+ * @name SC-app-content-components.controller:HtmlCtrl
  * @controller
  *
  * @description
- * Defines the state and behaviour of the $scope for the twitterFeed state
+ * Defines the state and behaviour of the $scope for the htmlView state
  */
 
 angular.module('SC-app-content-components')
-  .controller('TwitterFeedCtrl', ["$scope", "$http", "$window", "appConfig", function($scope, $http, $window, appConfig) {
+  .controller('HtmlCtrl', ["$scope", function($scope) {
 
-    // This block is tied to festivals because it uses the twitter
-    // username stored on festival
-    if (appConfig.festivalId) {
+      $scope.html = $scope.contentComponent;
 
-      // Load the tweets from the API
-      $http.get('/json/favourited-tweets/' + appConfig.festivalId)
-        .success(function(data) {
+  }]);;'use strict';
 
-          if (!data.errors) {
+/**
+ * @ngdoc controller
+ * @name SC-app-content-components.controller:ImageCtrl
+ * @controller
+ *
+ * @description
+ * Defines the state and behaviour of the $scope for the imageView state
+ */
 
-            $scope.twitterValid = true;
-          
-            $scope.tweets = data;
+angular.module('SC-app-content-components')
+  .controller('ImageCtrl', ["$scope", "$http", function($scope, $http) {
 
-            angular.forEach($scope.tweets, function(tweet, i) {
-
-              // Format creation date/time with moment twitter format
-              $scope.tweets[i].created_at = $window.moment(tweet.created_at).fromNow();
-
-              // Begin formatting of entities
-              var entities = {};
-
-              // Hashtags
-              angular.forEach(tweet.entities.hashtags, function(hashtag) {
-                entities[hashtag.indices[0]] = '<a href="https://twitter.com/hashtag/' + hashtag.text + '">';
-                entities[hashtag.indices[1]] = '</a>';
-              });
-
-              // Media
-              angular.forEach(tweet.entities.media, function(media) {
-                entities[media.indices[0]] = '<a href="' + media.media_url + '">';
-                entities[media.indices[1]] = '</a>';
-              });
-
-              // URLs
-              angular.forEach(tweet.entities.urls, function(url) {
-                entities[url.indices[0]] = '<a href="' + url.url + '">';
-                entities[url.indices[1]] = '</a>';
-              });
-
-              // User mentions
-              angular.forEach(tweet.entities.user_mentions, function(user_mention) {
-                entities[user_mention.indices[0]] = '<a href="http://twitter.com/' + user_mention.screen_name + '">';
-                entities[user_mention.indices[1]] = '</a>';
-              });
-
-              // Apply entity markup
-              var delta = 0;
-              angular.forEach(entities, function(entity, pos) {
-
-                var n = parseInt(pos, 10) + delta;
-                $scope.tweets[i].text = $scope.tweets[i].text.substr(0, n) + entity + $scope.tweets[i].text.substr(n);
-                delta = delta + entity.length;
-
-              });
-
-            });
-
-          }
-
-
+    // if we have a file id in the image field, get the URL of the file
+    if ($scope.contentComponent.field_image.file.id) {
+      $http.get('/json/file/' + $scope.contentComponent.field_image.file.id + '.json')
+        .success(function(file) {
+          $scope.contentComponent.field_image.file.url = file.url;
         });
-
-    } else {
-
-      console.error('Twitter feed component requires festival module');
-
     }
+
+    $scope.image = $scope.contentComponent;
+
+  }]);;'use strict';
+
+/**
+ * @ngdoc controller
+ * @name SC-app-content-components.controller:LongTextCtrl
+ * @controller
+ *
+ * @description
+ * Defines the state and behaviour of the $scope for the longTextView state
+ */
+
+angular.module('SC-app-content-components')
+  .controller('LongTextCtrl', ["$scope", function($scope) {
+
+    $scope.longText = $scope.contentComponent;
+
+  }]);;'use strict';
+
+/**
+ * @ngdoc controller
+ * @name SC-app-content-components.controller:PageElementSpecCtrl
+ * @controller
+ *
+ * @description
+ * Defines the state and behaviour of the $scope for the pageElementSpecView state
+ */
+
+angular.module('SC-app-content-components')
+  .controller('PageElementSpecCtrl', ["$scope", function($scope) {
+
+      $scope.pageElementSpec = $scope.contentComponent;
 
   }]);
