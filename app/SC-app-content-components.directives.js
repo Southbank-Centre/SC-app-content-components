@@ -44,7 +44,8 @@ angular.module('SC-app-content-components')
         };
       }
     };
-  })  /**
+  })
+  /**
    * @ngdoc directive
    * @name SC-app-content-components-heading-menu.directive:scContentComponentHeadingMenu
    * @directive
