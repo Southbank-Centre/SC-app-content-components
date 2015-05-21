@@ -42,7 +42,7 @@ angular.module('SC-app-content-components')
 
               $http.get(tpl)
                 .then(function(response) {
-                  $templateCache.put('bower_components/SC-app-content-components/release/html/htmlView.html', response.data);
+                  $templateCache.put(tpl, response.data);
                   element.html($compile(response.data)(scope));
                 });
 
