@@ -10,7 +10,7 @@ angular.module('SC-app-content-components')
    * Decides which content component to render
    *
    */
-  .directive('scContentComponent', ["$http", "$compile", "contentComponentFactory", "utilitiesFactory", "$templateCache", function($http, $compile, contentComponentFactory, utilitiesFactory, $templateCache) {
+  .directive('scContentComponent', function($http, $compile, contentComponentFactory, utilitiesFactory, $templateCache) {
     return {
       restrict: 'A',
       scope: true,
@@ -44,7 +44,7 @@ angular.module('SC-app-content-components')
         };
       }
     };
-  }])  /**
+  })  /**
    * @ngdoc directive
    * @name SC-app-content-components-heading-menu.directive:scContentComponentHeadingMenu
    * @directive
