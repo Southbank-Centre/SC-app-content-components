@@ -23,7 +23,7 @@ angular.module('SC-app-content-components')
    * Decides which content component to render
    *
    */
-  .directive('scContentComponent', ["$http", "$compile", "contentComponentFactory", "utilitiesFactory", function($http, $compile, contentComponentFactory, utilitiesFactory) {
+  .directive('scContentComponent', ["$http", "$compile", "contentComponentFactory", "utilitiesFactory", "$templateCache", function($http, $compile, contentComponentFactory, utilitiesFactory, $templateCache) {
     return {
       restrict: 'A',
       scope: true,
@@ -36,10 +36,21 @@ angular.module('SC-app-content-components')
             scope.contentComponent = contentComponent;
 
             var tpl = 'bower_components/SC-app-content-components/release/' + contentComponent.bundle + '/' + contentComponent.bundle + 'View.html';
-            $http.get(tpl)
-              .then(function(response) {
-                element.html($compile(response.data)(scope));
-              });
+            var tplFromCache = $templateCache.get(tpl);
+
+            if (typeof tplFromCache === 'undefined') {
+
+              $http.get(tpl)
+                .then(function(response) {
+                  $templateCache.put('bower_components/SC-app-content-components/release/html/htmlView.html', response.data);
+                  element.html($compile(response.data)(scope));
+                });
+
+            } else {
+
+              element.html($compile(tplFromCache)(scope));
+
+            }
 
           }, utilitiesFactory.genericHTTPCallbackError);
 
