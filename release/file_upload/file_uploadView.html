@@ -1,0 +1,11 @@
+<div ng-controller="FileUploadCtrl" class="component-upload">
+
+    <div ng-repeat="upload in fileUpload.field_file_upload">
+        <a ng-href="{{ upload.file.url }}" target="blank">
+            <span ng-if="upload.description == ''">{{ upload.file.name }}</span>
+            <span ng-if="upload.description != ''">{{ upload.description }}</span>
+            ({{ upload.file.size | byteFmt: 1 }})
+        </a>
+    </div>
+
+</div>
