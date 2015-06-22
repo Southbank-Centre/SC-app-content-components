@@ -1,4 +1,4 @@
 <figure ng-show="image" class="component-image" ng-controller="ImageCtrl">
   <img ng-src="{{ image.field_image.file.url }}" alt="{{ image.field_image.alt }}" title="{{ image.field_image.title }}"/>
-  <figcaption data-ng-bind-html="image.field_caption.value"></figcaption>
+  <figcaption ng-if="image.field_caption.value" data-ng-bind-html="image.field_caption.value"></figcaption>
 </figure>
