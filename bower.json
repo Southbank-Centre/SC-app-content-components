@@ -1,13 +1,18 @@
 {
   "name": "SC-app-content-components",
-  "version": "1.1.0",
-  "dependencies": {
-    "angular": "~1.2.0",
-    "SC-app-utils": "Southbank-Centre/SC-app-utils#0.0.0",
-    "angular-highlightjs": "~0.4.1"
-  },
+  "version": "1.2.0",
+  "description": "Content components app for Southbank Centre website",
+  "authors": [
+    "Sam Murray <sam.murray@southbankcentre.co.uk>",
+    "Dave Vernon <dave.vernon@southbankcentre.co.uk>"
+  ],
   "appPath": "app",
   "main": "./release/SC-app-content-components.min.js",
+  "keywords": [
+    "content components"
+  ],
+  "license": "MIT",
+  "private": true,
   "ignore": [
     "**/.*",
     "app",
@@ -16,5 +21,10 @@
     "package.json",
     "Gruntfile.js",
     "test"
-  ]
+  ],
+  "dependencies": {
+    "angular": "~1.4.2",
+    "angular-highlightjs": "~0.4.1",
+    "SC-app-utils": "Southbank-Centre/SC-app-utils#0.2.0"
+  }
 }
